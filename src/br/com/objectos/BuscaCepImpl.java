@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.List;
 
 import javax.swing.text.html.HTMLEditorKit;
 
@@ -17,7 +16,7 @@ public class BuscaCepImpl extends AbstractBuscaCepImpl implements BuscaCep {
 	}
 
 	@Override
-	protected List<String> getCookiesConsulta(String cep) throws BuscaCepException {
+	protected Cookies getCookiesConsulta(String cep) throws BuscaCepException {
 		BufferedReader reader = null;
 		HttpURLConnection connection = null;
 
@@ -38,7 +37,7 @@ public class BuscaCepImpl extends AbstractBuscaCepImpl implements BuscaCep {
 				throw new BuscaCepException(parser.getErro());
 			}
 
-			List<String> cookies = connection.getHeaderFields().get("Set-Cookie");
+			Cookies cookies = new Cookies(connection);
 
 			return cookies;
 
@@ -61,11 +60,7 @@ public class BuscaCepImpl extends AbstractBuscaCepImpl implements BuscaCep {
 	}
 
 	@Override
-	protected Endereco getDetalhe(List<String> cookies) throws BuscaCepException {
-		if (cookies == null || cookies.isEmpty()) {
-			throw new BuscaCepException("Sessão expirada.");
-		}
-
+	protected Endereco getDetalhe(Cookies cookies) throws BuscaCepException {
 		BufferedReader reader = null;
 		HttpURLConnection connection = null;
 
@@ -74,9 +69,7 @@ public class BuscaCepImpl extends AbstractBuscaCepImpl implements BuscaCep {
 			URL url = new URL(BuscaCepUtils.getUrlConstruida(DETALHES_URL, DETALHES_URL_PARAMETROS));
 			connection = (HttpURLConnection) url.openConnection();
 
-			for (String cookie : cookies) {
-				connection.addRequestProperty("Cookie", cookie.split(";", 2)[0]);
-			}
+			cookies.addCookiesToConnection(connection);
 
 			InputStream is = connection.getInputStream();
 
@@ -86,12 +79,7 @@ public class BuscaCepImpl extends AbstractBuscaCepImpl implements BuscaCep {
 			DetalheParser parser = new DetalheParser();
 			parse.parse(reader, parser, true);
 
-			String logradouro = parser.getEnderecoMap().get(CamposEndereco.LOGRADOURO.getRotulo());
-			String bairro = parser.getEnderecoMap().get(CamposEndereco.BAIRRO.getRotulo());
-			String localidade = parser.getEnderecoMap().get(CamposEndereco.LOCALIDADE.getRotulo());
-			String cepEndereco = parser.getEnderecoMap().get(CamposEndereco.CEP.getRotulo());
-
-			return new Endereco(logradouro, bairro, localidade, cepEndereco);
+			return parser.getEnderecoHelper().createEndereco();
 
 		} catch (IOException e) {
 			throw new BuscaCepException(e.getClass().getName(), e);

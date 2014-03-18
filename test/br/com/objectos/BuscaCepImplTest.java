@@ -1,8 +1,8 @@
 package br.com.objectos;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +27,9 @@ public class BuscaCepImplTest {
 	@Test
 	public void testGetCookiesConsulta() throws Exception {
 		String cep = "05414-001";
-		List<String> cookies = buscaCep.getCookiesConsulta(cep);
+		Cookies cookies = buscaCep.getCookiesConsulta(cep);
 
-		assertFalse(cookies.isEmpty());
+		assertTrue(cookies.isValid());
 	}
 
 	@Test
@@ -45,7 +45,7 @@ public class BuscaCepImplTest {
 	@Test
 	public void testGetDetalhe() throws Exception {
 		String cep = "05414-001";
-		List<String> cookies = buscaCep.getCookiesConsulta(cep);
+		Cookies cookies = buscaCep.getCookiesConsulta(cep);
 
 		Endereco endereco = buscaCep.getDetalhe(cookies);
 
@@ -60,7 +60,7 @@ public class BuscaCepImplTest {
 		thrown.expect(BuscaCepException.class);
 		thrown.expectMessage("Sessão expirada.");
 
-		buscaCep.getDetalhe(null);
+		buscaCep.getDetalhe(new Cookies((List<String>) null));
 	}
 
 	@Test
@@ -68,7 +68,7 @@ public class BuscaCepImplTest {
 		thrown.expect(BuscaCepException.class);
 		thrown.expectMessage("Sessão expirada.");
 
-		buscaCep.getDetalhe(new ArrayList<String>());
+		buscaCep.getDetalhe(new Cookies(new ArrayList<String>()));
 	}
 
 	@Test
@@ -76,7 +76,7 @@ public class BuscaCepImplTest {
 		String cep = "05414-001";
 		String cep2 = "04614-013";
 
-		List<String> cookies = buscaCep.getCookiesConsulta(cep);
+		Cookies cookies = buscaCep.getCookiesConsulta(cep);
 		buscaCep.getCookiesConsulta(cep2);
 
 		Endereco endereco = buscaCep.getDetalhe(cookies);
@@ -93,7 +93,7 @@ public class BuscaCepImplTest {
 		String cep2 = "04614-013";
 
 		buscaCep.getCookiesConsulta(cep);
-		List<String> cookies = buscaCep.getCookiesConsulta(cep2);
+		Cookies cookies = buscaCep.getCookiesConsulta(cep2);
 
 		Endereco endereco = buscaCep.getDetalhe(cookies);
 

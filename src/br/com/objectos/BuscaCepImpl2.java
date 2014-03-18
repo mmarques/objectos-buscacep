@@ -6,9 +6,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import br.com.objectos.EnderecoHelper.CamposEndereco;
 
 public class BuscaCepImpl2 extends AbstractBuscaCepImpl implements BuscaCep {
 
@@ -19,7 +18,7 @@ public class BuscaCepImpl2 extends AbstractBuscaCepImpl implements BuscaCep {
 	}
 
 	@Override
-	protected List<String> getCookiesConsulta(String cep) throws BuscaCepException {
+	protected Cookies getCookiesConsulta(String cep) throws BuscaCepException {
 		BufferedReader reader = null;
 		HttpURLConnection connection = null;
 
@@ -40,7 +39,7 @@ public class BuscaCepImpl2 extends AbstractBuscaCepImpl implements BuscaCep {
 
 			}
 
-			List<String> cookies = connection.getHeaderFields().get("Set-Cookie");
+			Cookies cookies = new Cookies(connection);
 
 			return cookies;
 
@@ -63,11 +62,7 @@ public class BuscaCepImpl2 extends AbstractBuscaCepImpl implements BuscaCep {
 	}
 
 	@Override
-	protected Endereco getDetalhe(List<String> cookies) throws BuscaCepException {
-		if (cookies == null || cookies.isEmpty()) {
-			throw new BuscaCepException("Sessão expirada.");
-		}
-
+	protected Endereco getDetalhe(Cookies cookies) throws BuscaCepException {
 		BufferedReader reader = null;
 		HttpURLConnection connection = null;
 
@@ -76,13 +71,11 @@ public class BuscaCepImpl2 extends AbstractBuscaCepImpl implements BuscaCep {
 			URL url = new URL(BuscaCepUtils.getUrlConstruida(DETALHES_URL, DETALHES_URL_PARAMETROS));
 			connection = (HttpURLConnection) url.openConnection();
 
-			for (String cookie : cookies) {
-				connection.addRequestProperty("Cookie", cookie.split(";", 2)[0]);
-			}
+			cookies.addCookiesToConnection(connection);
 
 			InputStream is = connection.getInputStream();
 
-			Map<String, String> enderecoMap = new HashMap<String, String>();
+			EnderecoHelper enderecoHelper = new EnderecoHelper();
 
 			reader = new BufferedReader(new InputStreamReader(is, ISO_8859_1));
 			String line;
@@ -90,20 +83,15 @@ public class BuscaCepImpl2 extends AbstractBuscaCepImpl implements BuscaCep {
 			while ((line = reader.readLine()) != null) {
 				if (line.contains(ENDERECO_KEY_TAG)) {
 					nextLine = reader.readLine();
-					enderecoMap.put(BuscaCepUtils.getInterno(line), BuscaCepUtils.getInterno(nextLine));
+					enderecoHelper.put(BuscaCepUtils.getInterno(line), BuscaCepUtils.getInterno(nextLine));
 				}
 
-				if (enderecoMap.size() == CamposEndereco.values().length) {
+				if (enderecoHelper.size() == CamposEndereco.values().length) {
 					break;
 				}
 			}
 
-			String logradouro = enderecoMap.get(CamposEndereco.LOGRADOURO.getRotulo());
-			String bairro = enderecoMap.get(CamposEndereco.BAIRRO.getRotulo());
-			String localidade = enderecoMap.get(CamposEndereco.LOCALIDADE.getRotulo());
-			String cepEndereco = enderecoMap.get(CamposEndereco.CEP.getRotulo());
-
-			return new Endereco(logradouro, bairro, localidade, cepEndereco);
+			return enderecoHelper.createEndereco();
 
 		} catch (IOException e) {
 			throw new BuscaCepException(e.getClass().getName(), e);

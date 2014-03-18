@@ -1,8 +1,5 @@
 package br.com.objectos;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.swing.text.MutableAttributeSet;
 import javax.swing.text.html.HTML;
 import javax.swing.text.html.HTML.Tag;
@@ -10,7 +7,7 @@ import javax.swing.text.html.HTMLEditorKit.ParserCallback;
 
 public class DetalheParser extends ParserCallback {
 
-	private final Map<String, String> enderecoMap = new HashMap<String, String>();
+	private final EnderecoHelper enderecoHelper = new EnderecoHelper();
 
 	private boolean copiaKey;
 	private boolean insereValue;
@@ -37,13 +34,13 @@ public class DetalheParser extends ParserCallback {
 		}
 
 		if (insereValue) {
-			enderecoMap.put(keyAtual, new String(data));
+			enderecoHelper.put(keyAtual, new String(data));
 			insereValue = false;
 		}
 	}
 
-	public Map<String, String> getEnderecoMap() {
-		return enderecoMap;
+	public EnderecoHelper getEnderecoHelper() {
+		return enderecoHelper;
 	}
 
 }
