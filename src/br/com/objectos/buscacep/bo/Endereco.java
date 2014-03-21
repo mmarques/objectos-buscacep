@@ -1,4 +1,4 @@
-package br.com.objectos;
+package br.com.objectos.buscacep.bo;
 
 public class Endereco {
 

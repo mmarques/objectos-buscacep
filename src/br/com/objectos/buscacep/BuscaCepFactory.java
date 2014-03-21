@@ -1,4 +1,6 @@
-package br.com.objectos;
+package br.com.objectos.buscacep;
+
+import br.com.objectos.buscacep.impl.HTMLParseBuscaCepImpl;
 
 public class BuscaCepFactory {
 
@@ -27,7 +29,7 @@ public class BuscaCepFactory {
 	 * @return BuscaCep
 	 */
 	public BuscaCep newBuscaCep() {
-		return new BuscaCepImpl();
+		return new HTMLParseBuscaCepImpl();
 	}
 
 }

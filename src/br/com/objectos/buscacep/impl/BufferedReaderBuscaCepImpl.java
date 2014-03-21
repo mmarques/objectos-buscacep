@@ -1,4 +1,4 @@
-package br.com.objectos;
+package br.com.objectos.buscacep.impl;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,15 +7,17 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import br.com.objectos.EnderecoHelper.CamposEndereco;
+import br.com.objectos.buscacep.BuscaCep;
+import br.com.objectos.buscacep.BuscaCepException;
+import br.com.objectos.buscacep.bo.Cookies;
+import br.com.objectos.buscacep.bo.Endereco;
+import br.com.objectos.buscacep.helper.EnderecoHelper;
+import br.com.objectos.buscacep.helper.EnderecoHelper.CamposEndereco;
+import br.com.objectos.buscacep.util.BuscaCepUtils;
 
-public class BuscaCepImpl2 extends AbstractBuscaCepImpl implements BuscaCep {
+public class BufferedReaderBuscaCepImpl extends AbstractBuscaCepImpl implements BuscaCep {
 
 	private static final String ENDERECO_KEY_TAG = "<td class=\"label\">";
-
-	protected BuscaCepImpl2() {
-
-	}
 
 	@Override
 	protected Cookies getCookiesConsulta(String cep) throws BuscaCepException {

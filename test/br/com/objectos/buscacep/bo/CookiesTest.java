@@ -1,4 +1,4 @@
-package br.com.objectos;
+package br.com.objectos.buscacep.bo;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -13,6 +13,8 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import br.com.objectos.buscacep.bo.Cookies;
 
 public class CookiesTest {
 

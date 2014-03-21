@@ -1,13 +1,16 @@
-package br.com.objectos;
+package br.com.objectos.buscacep.helper;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import br.com.objectos.buscacep.BuscaCepException;
+import br.com.objectos.buscacep.bo.Endereco;
 
 public class EnderecoHelper {
 
 	private final Map<String, String> enderecoMap = new HashMap<String, String>();
 
-	protected enum CamposEndereco {
+	public enum CamposEndereco {
 
 		LOGRADOURO("Logradouro:"), BAIRRO("Bairro:"), LOCALIDADE("Localidade / UF:"), CEP("CEP:");
 

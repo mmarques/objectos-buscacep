@@ -1,15 +1,19 @@
-package br.com.objectos;
+package br.com.objectos.buscacep.helper;
 
-import static br.com.objectos.EnderecoHelper.CamposEndereco.BAIRRO;
-import static br.com.objectos.EnderecoHelper.CamposEndereco.CEP;
-import static br.com.objectos.EnderecoHelper.CamposEndereco.LOCALIDADE;
-import static br.com.objectos.EnderecoHelper.CamposEndereco.LOGRADOURO;
+import static br.com.objectos.buscacep.helper.EnderecoHelper.CamposEndereco.BAIRRO;
+import static br.com.objectos.buscacep.helper.EnderecoHelper.CamposEndereco.CEP;
+import static br.com.objectos.buscacep.helper.EnderecoHelper.CamposEndereco.LOCALIDADE;
+import static br.com.objectos.buscacep.helper.EnderecoHelper.CamposEndereco.LOGRADOURO;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import br.com.objectos.buscacep.BuscaCepException;
+import br.com.objectos.buscacep.bo.Endereco;
+import br.com.objectos.buscacep.helper.EnderecoHelper;
 
 public class EnderecoHelperTest {
 

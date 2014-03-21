@@ -1,4 +1,4 @@
-package br.com.objectos;
+package br.com.objectos.buscacep.impl;
 
 import javax.swing.text.html.HTMLEditorKit;
 

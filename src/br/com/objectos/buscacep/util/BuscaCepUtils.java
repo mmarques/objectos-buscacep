@@ -1,11 +1,11 @@
-package br.com.objectos;
+package br.com.objectos.buscacep.util;
 
 import java.util.Map;
 import java.util.Map.Entry;
 
 public class BuscaCepUtils {
 
-	protected static String getUrlConstruida(String url, Map<String, String> parametros, String... params) {
+	public static String getUrlConstruida(String url, Map<String, String> parametros, String... params) {
 		StringBuilder sb = new StringBuilder();
 
 		for (Entry<String, String> entry : parametros.entrySet()) {
@@ -32,7 +32,7 @@ public class BuscaCepUtils {
 		return sb.toString();
 	}
 
-	protected static String getInterno(String tag) {
+	public static String getInterno(String tag) {
 		return tag.substring(tag.indexOf(">") + 1, tag.lastIndexOf("<"));
 	}
 

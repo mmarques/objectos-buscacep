@@ -1,4 +1,4 @@
-package br.com.objectos;
+package br.com.objectos.buscacep;
 
 import static org.junit.Assert.assertEquals;
 
@@ -6,6 +6,11 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import br.com.objectos.buscacep.BuscaCep;
+import br.com.objectos.buscacep.BuscaCepException;
+import br.com.objectos.buscacep.BuscaCepFactory;
+import br.com.objectos.buscacep.bo.Endereco;
 
 public class BuscaCepTest {
 

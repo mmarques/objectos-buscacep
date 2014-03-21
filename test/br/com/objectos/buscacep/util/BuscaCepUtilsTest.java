@@ -1,4 +1,4 @@
-package br.com.objectos;
+package br.com.objectos.buscacep.util;
 
 import static org.junit.Assert.assertEquals;
 
@@ -6,6 +6,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.junit.Test;
+
+import br.com.objectos.buscacep.util.BuscaCepUtils;
 
 public class BuscaCepUtilsTest {
 

@@ -1,4 +1,4 @@
-package br.com.objectos;
+package br.com.objectos.buscacep.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -12,16 +12,20 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import br.com.objectos.buscacep.BuscaCepException;
+import br.com.objectos.buscacep.bo.Cookies;
+import br.com.objectos.buscacep.bo.Endereco;
+
 public class BuscaCepImplTest {
 
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
 
-	private BuscaCepImpl buscaCep;
+	private HTMLParseBuscaCepImpl buscaCep;
 
 	@Before
 	public void before() {
-		buscaCep = new BuscaCepImpl();
+		buscaCep = new HTMLParseBuscaCepImpl();
 	}
 
 	@Test
@@ -60,7 +64,9 @@ public class BuscaCepImplTest {
 		thrown.expect(BuscaCepException.class);
 		thrown.expectMessage("Sessão expirada.");
 
-		buscaCep.getDetalhe(new Cookies((List<String>) null));
+		buscaCep.getDetalhe(new Cookies((List<String>) null) {
+			// inner type
+		});
 	}
 
 	@Test
@@ -68,7 +74,9 @@ public class BuscaCepImplTest {
 		thrown.expect(BuscaCepException.class);
 		thrown.expectMessage("Sessão expirada.");
 
-		buscaCep.getDetalhe(new Cookies(new ArrayList<String>()));
+		buscaCep.getDetalhe(new Cookies(new ArrayList<String>()) {
+			// inner type
+		});
 	}
 
 	@Test

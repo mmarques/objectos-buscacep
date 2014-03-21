@@ -1,8 +1,13 @@
-package br.com.objectos;
+package br.com.objectos.buscacep.impl;
 
 import java.nio.charset.Charset;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import br.com.objectos.buscacep.BuscaCep;
+import br.com.objectos.buscacep.BuscaCepException;
+import br.com.objectos.buscacep.bo.Cookies;
+import br.com.objectos.buscacep.bo.Endereco;
 
 public abstract class AbstractBuscaCepImpl implements BuscaCep {
 
@@ -45,8 +50,8 @@ public abstract class AbstractBuscaCepImpl implements BuscaCep {
 		return getDetalhe(cookies);
 	}
 
-	abstract protected Cookies getCookiesConsulta(String cep) throws BuscaCepException;
+	protected abstract Cookies getCookiesConsulta(String cep) throws BuscaCepException;
 
-	abstract protected Endereco getDetalhe(Cookies cookies) throws BuscaCepException;
+	protected abstract Endereco getDetalhe(Cookies cookies) throws BuscaCepException;
 
 }

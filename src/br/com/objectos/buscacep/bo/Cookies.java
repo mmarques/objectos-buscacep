@@ -1,7 +1,9 @@
-package br.com.objectos;
+package br.com.objectos.buscacep.bo;
 
 import java.net.HttpURLConnection;
 import java.util.List;
+
+import br.com.objectos.buscacep.BuscaCepException;
 
 public class Cookies {
 
@@ -25,7 +27,7 @@ public class Cookies {
 		}
 	}
 
-	protected boolean isValid() {
+	public boolean isValid() {
 		return cookies != null && !(cookies.isEmpty());
 	}
 

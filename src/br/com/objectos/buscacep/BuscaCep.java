@@ -1,4 +1,6 @@
-package br.com.objectos;
+package br.com.objectos.buscacep;
+
+import br.com.objectos.buscacep.bo.Endereco;
 
 public interface BuscaCep {
 

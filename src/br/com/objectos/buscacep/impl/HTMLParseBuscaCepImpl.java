@@ -1,4 +1,4 @@
-package br.com.objectos;
+package br.com.objectos.buscacep.impl;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,11 +9,13 @@ import java.net.URL;
 
 import javax.swing.text.html.HTMLEditorKit;
 
-public class BuscaCepImpl extends AbstractBuscaCepImpl implements BuscaCep {
+import br.com.objectos.buscacep.BuscaCep;
+import br.com.objectos.buscacep.BuscaCepException;
+import br.com.objectos.buscacep.bo.Cookies;
+import br.com.objectos.buscacep.bo.Endereco;
+import br.com.objectos.buscacep.util.BuscaCepUtils;
 
-	protected BuscaCepImpl() {
-
-	}
+public class HTMLParseBuscaCepImpl extends AbstractBuscaCepImpl implements BuscaCep {
 
 	@Override
 	protected Cookies getCookiesConsulta(String cep) throws BuscaCepException {
